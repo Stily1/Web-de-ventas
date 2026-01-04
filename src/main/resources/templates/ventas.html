@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Historial de Ventas</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+
+<body class="container mt-4">
+
+<h1 class="mb-3">📊 Historial de Ventas</h1>
+
+<p class="fw-bold">
+    Total vendido: S/
+    <span th:text="${#numbers.formatDecimal(totalVendido, 1, 2)}">0.00</span>
+</p>
+
+<div th:if="${ventas == null or #lists.isEmpty(ventas)}">
+    <p class="text-muted">No hay ventas registradas.</p>
+</div>
+
+<!-- 🗑️ Vaciar historial (SOLO ADMIN) -->
+<div sec:authorize="hasRole('ADMIN')">
+    <form method="post" action="/ventas/vaciar" style="margin-top:10px;">
+        <button type="submit"
+                class="btn btn-danger btn-sm"
+                onclick="return confirm('¿Seguro que deseas borrar TODO el historial?');">
+            🗑️ Vaciar historial
+        </button>
+    </form>
+</div>
+
+<table th:if="${ventas != null and !#lists.isEmpty(ventas)}"
+       class="table table-bordered table-striped mt-3">
+
+    <thead class="table-light">
+    <tr>
+        <th>Acciones</th>
+        <th>ID</th>
+        <th>Total</th>
+        <th>Fecha</th>
+        <th>Detalle</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="v : ${ventas}">
+        <td>
+            <!-- ❌ Eliminar venta (SOLO ADMIN) -->
+            <div sec:authorize="hasRole('ADMIN')">
+                <form th:action="@{/ventas/{id}/eliminar(id=${v.id})}"
+                      method="post"
+                      style="display:inline;"
+                      onsubmit="return confirm('¿Eliminar esta venta?');">
+                    <button type="submit" class="btn btn-sm btn-danger">
+                        🗑️ Eliminar
+                    </button>
+                </form>
+            </div>
+        </td>
+
+        <td th:text="${v.id}"></td>
+        <td th:text="${#numbers.formatDecimal(v.total, 1, 2)}"></td>
+        <td th:text="${v.fecha}"></td>
+        <td>
+            <a th:href="@{/ventas/{id}(id=${v.id})}">
+                Ver detalle
+            </a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<hr>
+
+<p class="mt-3">
+    <a href="/ventas/nueva" class="me-2">➕ Nueva venta</a>
+
+    <!-- 📦 Productos (SOLO ADMIN) -->
+    <span sec:authorize="hasRole('ADMIN')">
+        | <a href="/productos" class="ms-2">📦 Productos</a>
+    </span>
+</p>
+
+<p>
+    <a href="/logout" class="text-danger">Cerrar sesión</a>
+</p>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
