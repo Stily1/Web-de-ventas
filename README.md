@@ -15,7 +15,7 @@ Proyecto universitario que permite registrar ventas y sus detalles utilizando un
 ---
 
 ## Estructura del proyecto
-
+```
 ventas/
 ├── src/
 ├── db/
@@ -26,7 +26,7 @@ ventas/
 ├── README.md
 ├── mvnw
 └── mvnw.cmd
-
+```
 ---
 
 ## Requisitos
@@ -46,16 +46,17 @@ ventas/
 ### Crear la base de datos
 ```sql
 CREATE DATABASE ventasdb;
-
+```
 Importar el respaldo incluido
-
+```
 mysql -u ventas_user -p ventasdb < db/ventasdb.sql
+```
 El archivo db/ventasdb.sql contiene la estructura y datos de ejemplo de la aplicación.
 
 ⚙️ Configuración de la aplicación
 
 Archivo application.properties:
-
+```
 spring.application.name=ventas
 server.port=8080
 
@@ -69,17 +70,18 @@ jakarta.persistence.jdbc.url=jdbc:mysql://127.0.0.1:3306/ventasdb
 
 spring.jpa.show-sql=true
 spring.jpa.hibernate.ddl-auto=update
+```
 
 Ejecución del proyecto
 
 Desde la raíz del proyecto ejecutar:
-
+```
 ./mvnw spring-boot:run
-
+```
 Luego abrir en el navegador:
-
+```
 http://localhost:8080
-
+```
 Verificación de funcionamiento
 
 La aplicación se ejecuta en el puerto 8080
