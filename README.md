@@ -158,7 +158,8 @@ Vendedor	vendedor	vendedor123
 
 Estos usuarios pertenecen a la base de datos de la app, no al sistema ni a MySQL.
 
--Problemas comunes y soluciones
+# Problemas comunes y soluciones
+---
 
 Error: Communications link failure
 
@@ -166,23 +167,26 @@ Error: Communications link failure
 ```
 sudo systemctl start mysql
 ```
+--
 Error: Access denied for user
 
 Usuario o contraseña incorrectos
 - Verifica credenciales
 - Asegúrate de haber ejecutado GRANT PRIVILEGES
+--
 
 Puerto 8080 ocupado
 
 Cambia el puerto en application.properties o usa:
-
+```
 server.port=8081
-
+```
+---
 Construir JAR para producción
 ```
 ./mvnw clean package
 ```
-
+---
 
 # Ejecutar:
 ```
