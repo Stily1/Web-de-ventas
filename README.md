@@ -1,11 +1,11 @@
-#Sistema Web de Ventas – Spring Boot
+# Sistema Web de Ventas – Spring Boot
 
 Aplicación web de ventas desarrollada con Spring Boot, Spring Data JPA, MySQL y Thymeleaf.
 Permite gestionar productos, stock y ventas en una tienda de forma sencilla.
 
 ---
 
-##Características
+## Características
 ```
 Gestión de productos (CRUD)
 
@@ -20,7 +20,7 @@ Persistencia con JPA / Hibernate
 Base de datos MySQL
 ```
 
-##Tecnologías usadas
+## Tecnologías usadas
 
 ---
 ```
@@ -42,7 +42,7 @@ Bootstrap
 ```
 ---
 
-##Requisitos previos
+## Requisitos previos
 ---
 
 
@@ -56,7 +56,7 @@ Antes de empezar, asegúrate de tener:
 
 ```
 
-##Verifica Java:
+## Verifica Java:
 ---
 ```
 java -version
@@ -65,11 +65,11 @@ java -version
 ## Clonar el repositorio
 ---
 ```
-git clone https://github.com/TU_USUARIO/TU_REPOSITORIO.git
+git clone https://github.com/Stily1/Web-de-ventas
 cd Web-de-ventas
 ```
 
-🗄️ Configuración de la base de datos (MySQL)
+## Configuración de la base de datos (MySQL)
 ---
 
 ##1️ Iniciar MySQL
@@ -103,13 +103,13 @@ FLUSH PRIVILEGES;
 
 -vendedor → operaciones básicas
 
-##3 (Opcional pero recomendado) Importar datos iniciales
+## 3 (Opcional pero recomendado) Importar datos iniciales
 
 Si el proyecto incluye un dump SQL:
 
 mysql -u admin -p ventasdb < db/ventasdb.sql
 
-##Configuración de la aplicación 
+## Configuración de la aplicación 
 
 Spring Boot permite usar variables de entorno, lo cual es más seguro y portable.
 
@@ -127,7 +127,7 @@ setx SPRING_DATASOURCE_USERNAME "admin"
 setx SPRING_DATASOURCE_PASSWORD "admin123"
 ```
 
-##Ejecutar la aplicación
+## Ejecutar la aplicación
 ---
 
 Usa el Maven Wrapper incluido:
@@ -140,7 +140,7 @@ En Windows:
 mvnw spring-boot:run
 ```
 
-##Acceso a la aplicación
+## Acceso a la aplicación
 ---
 
 Por defecto:
@@ -148,7 +148,7 @@ Por defecto:
 http://localhost:8080
 ```
 
-##Usuarios de la aplicación
+## Usuarios de la aplicación
 
 (si están cargados en la base de datos)
 
@@ -184,17 +184,17 @@ Construir JAR para producción
 ```
 
 
-#Ejecutar:
+# Ejecutar:
 ```
 java -jar target/ventas-0.0.1-SNAPSHOT.jar
 ```
 
 
-#Licencia
+# Licencia
 
 Proyecto de uso educativo / demostrativo.
 
-#Autor
+# Autor
 
 Desarrollado por Anthony
 Proyecto académico / práctico con Spring Boot
