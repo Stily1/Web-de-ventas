@@ -1,103 +1,200 @@
-# Ventas App 
+#Sistema Web de Ventas – Spring Boot
 
-Aplicación web desarrollada con **Spring Boot** y **MySQL** para la gestión de ventas.
-Proyecto universitario que permite registrar ventas y sus detalles utilizando una base de datos relacional.
-
----
-
-## Tecnologías utilizadas
-- Java 17
-- Spring Boot 4
-- Spring Data JPA (Hibernate)
-- MySQL 8
-- Maven
+Aplicación web de ventas desarrollada con Spring Boot, Spring Data JPA, MySQL y Thymeleaf.
+Permite gestionar productos, stock y ventas en una tienda de forma sencilla.
 
 ---
 
-## Estructura del proyecto
+##Características
 ```
-ventas/
-├── src/
-├── db/
-│ └── ventasdb.sql
-├── pom.xml
-├── application.properties
-├── .gitignore
-├── README.md
-├── mvnw
-└── mvnw.cmd
+Gestión de productos (CRUD)
+
+Registro de ventas
+
+Control de stock
+
+Arquitectura MVC
+
+Persistencia con JPA / Hibernate
+
+Base de datos MySQL
+```
+
+##Tecnologías usadas
+
+---
+```
+Java 21+ (recomendado)
+
+Spring Boot 4
+
+Spring Data JPA
+
+Hibernate
+
+MySQL 8
+
+Maven Wrapper (mvnw)
+
+Thymeleaf
+
+Bootstrap
 ```
 ---
 
-## Requisitos
-- Java 17 instalado
-- MySQL Server 8
-- Maven (o usar el wrapper incluido `mvnw`)
-
+##Requisitos previos
 ---
 
-## Base de datos
 
-**Datos de conexión (entorno académico):**
-- Base de datos: `ventasdb`
-- Usuario: `ventas_user`
-- Contraseña: `ventas123`
-
-### Crear la base de datos
-```sql
-CREATE DATABASE ventasdb;
+Antes de empezar, asegúrate de tener:
 ```
-Importar el respaldo incluido
-```
-mysql -u ventas_user -p ventasdb < db/ventasdb.sql
-```
-El archivo db/ventasdb.sql contiene la estructura y datos de ejemplo de la aplicación.
+☑ Java 21 o superior
 
-⚙️ Configuración de la aplicación
+☑ MySQL 8
 
-Archivo application.properties:
-```
-spring.application.name=ventas
-server.port=8080
+☑ Git
 
-spring.datasource.url=jdbc:mysql://127.0.0.1:3306/ventasdb?useSSL=false&serverTimezone=America/Lima&allowPublicKeyRetrieval=true
-spring.datasource.username=ventas_user
-spring.datasource.password=ventas123
-spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
-
-spring.jpa.database-platform=org.hibernate.dialect.MySQLDialect
-jakarta.persistence.jdbc.url=jdbc:mysql://127.0.0.1:3306/ventasdb
-
-spring.jpa.show-sql=true
-spring.jpa.hibernate.ddl-auto=update
 ```
 
-Ejecución del proyecto
+##Verifica Java:
+---
+```
+java -version
+```
 
-Desde la raíz del proyecto ejecutar:
+## Clonar el repositorio
+---
+```
+git clone https://github.com/TU_USUARIO/TU_REPOSITORIO.git
+cd Web-de-ventas
+```
+
+🗄️ Configuración de la base de datos (MySQL)
+---
+
+##1️ Iniciar MySQL
+```
+sudo systemctl start mysql
+sudo systemctl enable mysql
+```
+##2️ Crear base de datos y usuarios
+
+Entra a MySQL como root:
+```
+sudo mysql
+```
+
+Ejecuta:
+```
+CREATE DATABASE IF NOT EXISTS ventasdb;
+
+CREATE USER IF NOT EXISTS 'admin'@'localhost' IDENTIFIED BY 'admin123';
+CREATE USER IF NOT EXISTS 'vendedor'@'localhost' IDENTIFIED BY 'vendedor123';
+
+GRANT ALL PRIVILEGES ON ventasdb.* TO 'admin'@'localhost';
+GRANT SELECT, INSERT, UPDATE, DELETE ON ventasdb.* TO 'vendedor'@'localhost';
+
+FLUSH PRIVILEGES;
+```
+
+
+
+-admin → acceso total
+
+-vendedor → operaciones básicas
+
+##3 (Opcional pero recomendado) Importar datos iniciales
+
+Si el proyecto incluye un dump SQL:
+
+mysql -u admin -p ventasdb < db/ventasdb.sql
+
+##Configuración de la aplicación 
+
+Spring Boot permite usar variables de entorno, lo cual es más seguro y portable.
+
+Linux / macOS
+```
+export SPRING_DATASOURCE_URL="jdbc:mysql://localhost:3306/ventasdb?useSSL=false&serverTimezone=America/Lima&allowPublicKeyRetrieval=true"
+export SPRING_DATASOURCE_USERNAME="admin"
+export SPRING_DATASOURCE_PASSWORD="admin123"
+```
+
+Windows (PowerShell)
+```
+setx SPRING_DATASOURCE_URL "jdbc:mysql://localhost:3306/ventasdb?useSSL=false&serverTimezone=America/Lima&allowPublicKeyRetrieval=true"
+setx SPRING_DATASOURCE_USERNAME "admin"
+setx SPRING_DATASOURCE_PASSWORD "admin123"
+```
+
+##Ejecutar la aplicación
+---
+
+Usa el Maven Wrapper incluido:
 ```
 ./mvnw spring-boot:run
 ```
-Luego abrir en el navegador:
+
+En Windows:
+```
+mvnw spring-boot:run
+```
+
+##Acceso a la aplicación
+---
+
+Por defecto:
 ```
 http://localhost:8080
 ```
-Verificación de funcionamiento
 
-La aplicación se ejecuta en el puerto 8080
+##Usuarios de la aplicación
 
-Spring Boot se conecta correctamente a MySQL
+(si están cargados en la base de datos)
 
-Hibernate crea y gestiona las tablas en la base ventasdb
+Rol	Usuario	Contraseña
+Administrador	admin	admin123
+Vendedor	vendedor	vendedor123
 
-Notas
+Estos usuarios pertenecen a la base de datos de la app, no al sistema ni a MySQL.
 
-Las credenciales incluidas son solo para fines académicos
+-Problemas comunes y soluciones
 
-El respaldo de la base de datos se incluye para facilitar la evaluación
+Error: Communications link failure
 
-El proyecto no utiliza Docker para simplificar su ejecución
+ MySQL no está corriendo
+```
+sudo systemctl start mysql
+```
+Error: Access denied for user
 
-Autor : Anthony Castillo
+Usuario o contraseña incorrectos
+- Verifica credenciales
+- Asegúrate de haber ejecutado GRANT PRIVILEGES
 
-Año: 2026
+Puerto 8080 ocupado
+
+Cambia el puerto en application.properties o usa:
+
+server.port=8081
+
+Construir JAR para producción
+```
+./mvnw clean package
+```
+
+
+#Ejecutar:
+```
+java -jar target/ventas-0.0.1-SNAPSHOT.jar
+```
+
+
+#Licencia
+
+Proyecto de uso educativo / demostrativo.
+
+#Autor
+
+Desarrollado por Anthony
+Proyecto académico / práctico con Spring Boot
